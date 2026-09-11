@@ -5,7 +5,7 @@ package.domain = org.cocvp
 source.dir = .
 source.include_exts = py,json,png,jpg,kv
 version = 1.0
-requirements = python3,kivy,requests,urllib3,certifi,charset-normalizer,idna
+requirements = python3,kivy,requests,urllib3,certifi,idna,charset-normalizer==2.0.12,chardet,six,filetype
 orientation = portrait
 fullscreen = 0
 android.api = 35
