@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CoC Command Center Web</title>
+<style>body{margin:0;background:#0b1220;color:#eee;font-family:Arial,sans-serif;padding:24px}.card{max-width:520px;margin:auto;background:#172033;border-radius:18px;padding:22px;box-shadow:0 10px 40px #0006}input,button{width:100%;box-sizing:border-box;padding:13px;margin:6px 0;border-radius:10px;border:0}button{font-weight:bold;cursor:pointer}.gold{background:#f59e0b}.muted{color:#aeb8c9}.item{background:#101827;padding:12px;border-radius:12px;margin:8px 0}</style></head>
+<body><div class="card"><h1>⚔️ CoC Command Center</h1><p class="muted">Same account data as the Android app.</p>
+<input id="email" placeholder="Login ID / Email"><input id="password" type="password" placeholder="Password">
+<button class="gold" onclick="login()">LOGIN</button><button onclick="signup()">CREATE ACCOUNT</button><button onclick="logout()">LOGOUT</button>
+<p id="status" class="muted"></p><div id="data"></div></div>
+<script type="module">
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js';
+import {getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,signOut} from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js';
+import {getDatabase,ref,get,set} from 'https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js';
+const cfg=await fetch('../firebase_config.json').then(r=>r.json()); const app=initializeApp(cfg); const auth=getAuth(app); const db=getDatabase(app);
+const $=id=>document.getElementById(id); window.login=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value); await load();}catch(e){$('status').textContent=e.message}};
+window.signup=async()=>{try{await createUserWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('status').textContent='Account created. Now you can use the same login in Android app.';}catch(e){$('status').textContent=e.message}};
+window.logout=async()=>{await signOut(auth);$('data').innerHTML='';$('status').textContent='Logged out';};
+async function load(){const u=auth.currentUser;if(!u)return;const s=await get(ref(db,'users/'+u.uid+'/appData'));const d=s.val();$('status').textContent='Logged in: '+u.email;if(!d){$('data').innerHTML='<p>No cloud data yet. Login on Android and upload/sync your local data.</p>';return} $('data').innerHTML='<h3>Accounts</h3>'+d.accounts.map(a=>'<div class="item">'+a+'</div>').join('')+'<h3>Running: '+d.upgrades.filter(x=>!x.done).length+'</h3><h3>Completed: '+d.history.length+'</h3>'}
+</script></body></html>

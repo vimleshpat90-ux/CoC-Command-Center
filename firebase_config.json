@@ -1,0 +1,9 @@
+{
+  "apiKey": "AIzaSyDBmfwkTHL3A25y8dpqdgyscp7WZRYFfrg",
+  "authDomain": "coc-command-center.firebaseapp.com",
+  "databaseURL": "https://coc-command-center-default-rtdb.firebaseio.com",
+  "projectId": "coc-command-center",
+  "storageBucket": "coc-command-center.firebasestorage.app",
+  "messagingSenderId": "689730807508",
+  "appId": "1:689730807508:web:afe4f91e259053dab7fd41"
+}
