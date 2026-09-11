@@ -11,8 +11,9 @@ fullscreen = 0
 android.api = 35
 android.minapi = 23
 android.permissions = POST_NOTIFICATIONS,VIBRATE
-android.archs = arm64-v8a,armeabi-v7a
+android.archs = arm64-v8a
 
 [buildozer]
 log_level = 2
 warn_on_root = 1
+android.ndk_path = /usr/local/lib/android/sdk/ndk/27.3.13750724
