@@ -16,4 +16,3 @@ android.archs = arm64-v8a
 [buildozer]
 log_level = 2
 warn_on_root = 1
-android.ndk_path = /usr/local/lib/android/sdk/ndk/27.3.13750724
