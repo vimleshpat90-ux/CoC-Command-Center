@@ -1,4 +1,6 @@
-import json, urllib.request, urllib.parse, urllib.error
+import json, ssl, certifi, urllib.request, urllib.parse, urllib.error
+
+_SSL_CTX = ssl.create_default_context(cafile=certifi.where())
 
 class FirebaseSync:
     def __init__(self, config_path):
@@ -17,7 +19,7 @@ class FirebaseSync:
     def _post(self, url, payload):
         req = urllib.request.Request(url, data=json.dumps(payload).encode(), headers={'Content-Type':'application/json'})
         try:
-            with urllib.request.urlopen(req, timeout=15) as r:
+            with urllib.request.urlopen(req, timeout=15, context=_SSL_CTX) as r:
                 return json.loads(r.read().decode())
         except urllib.error.HTTPError as e:
             raw=e.read().decode(errors='ignore')
@@ -30,7 +32,7 @@ class FirebaseSync:
     def _request(self, method, url, payload=None):
         data = None if payload is None else json.dumps(payload).encode()
         req = urllib.request.Request(url, data=data, method=method, headers={'Content-Type':'application/json'})
-        with urllib.request.urlopen(req, timeout=15) as r:
+        with urllib.request.urlopen(req, timeout=15, context=_SSL_CTX) as r:
             raw = r.read().decode()
             return json.loads(raw) if raw else None
 
