@@ -10,7 +10,7 @@ orientation = portrait
 fullscreen = 0
 android.api = 35
 android.minapi = 24
-android.permissions = POST_NOTIFICATIONS,VIBRATE
+android.permissions = INTERNET,POST_NOTIFICATIONS,VIBRATE
 android.archs = arm64-v8a
 
 [buildozer]
